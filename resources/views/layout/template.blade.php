@@ -89,7 +89,9 @@
                     </div>
                     <div class="dropdown-divider"></div>
                     <ul class="sidebar-menu">
-                        <li class="menu-header">Menu Pelaku Usaha</li>
+                        <li class=" text-center">
+                            <h6 class="nav-link mb-0 pb-0">{{ auth()->user()->nib->nama_perusahaan }}</h6>
+                        </li>
                         <li><a class="nav-link" href="{{ url('/user') }}"><i class="fas fa-fire"></i>
                                 <span>Dashboard</span></a>
                         </li>
@@ -148,6 +150,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="{{ asset('template/assets/js/stisla.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- JS Libraies -->
     <script src="{{ asset('template/node_modules/jquery-sparkline/jquery.sparkline.min.js"') }}"></script>
@@ -166,6 +169,7 @@
     <script src="{{ asset('template/assets/js/page/components-statistic.js') }}"></script>
     <script src="{{ asset('template/assets/js/page/modules-ion-icons.js') }}"></script>
     <script src="{{ asset('template/assets/js/page/forms-advanced-forms.js') }}"></script>
+    @stack('script')
 </body>
 
 </html>

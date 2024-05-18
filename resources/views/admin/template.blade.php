@@ -62,7 +62,7 @@
                             <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->name }}</div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <div class="dropdown-title">Logged in 5 min ago</div>
+                            <div class="dropdown-title"></div>
                             <a href="features-settings.html" class="dropdown-item has-icon">
                                 <i class="fas fa-cog"></i> Settings
                             </a>
@@ -95,13 +95,20 @@
                                     class="fas fa-fire"></i><span>Dashboard</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('admin/user') }}" class="nav-link"><i class="fas fa-th-large"></i>
-                                <span>Data User</span></a>
-                        </li>
-                        <li class="nav-item">
                             <a href="{{ url('admin/bidang') }}" class="nav-link"><i class="fas fa-th-large"></i>
                                 <span>Data Bidang</span></a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>Data
+                                    User</span></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="nav-link" href="{{ url('/admin/adminlist') }}">Daftar Admin
+                                    </a></li>
+                                <li><a class="nav-link" href="{{ url('admin/user ') }}">Daftar
+                                        Pelaku Usaha</a></li>
+                            </ul>
+                        </li>
+
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>Data
                                     Perusahaan</span></a>
@@ -117,9 +124,9 @@
                                     class="fas fa-columns"></i><span>Data Laporan</span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="{{ url('/admin/laporan') }}">Daftar Laporan</a></li>
-                                <li><a class="nav-link" href="{{ url('/cetak/laporan') }}">Cetak Laporan</a></li>
-                                <li><a class="nav-link" href="{{ url('/rekapitulasi') }}">Rekapitulasi Bulanan</a>
+                                <li><a class="nav-link" href="{{ url('/rekapitulasi') }}">Laporan Bulanan</a>
                                 </li>
+                                <li><a class="nav-link" href="{{ url('/cetak/laporan') }}">Cetak Laporan</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -144,8 +151,9 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="{{ asset('template/assets/js/stisla.js') }}"></script>
 
+    <script src="{{ asset('template/assets/js/stisla.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- JS Libraies -->
     <script src="{{ asset('template/node_modules/jquery-sparkline/jquery.sparkline.min.js"') }}"></script>
     <script src="{{ asset('template/node_modules/jqvmap/dist/jquery.vmap.min.js') }}"></script>

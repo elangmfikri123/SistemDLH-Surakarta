@@ -23,12 +23,12 @@
                                     <div class="form-group col-md-5">
                                         <label>No Izin Kegiatan Usaha (NIB)</label>
                                         <input name="no_izin" type="text" class="form-control"
-                                            value="{{ $perusahaan->no_izin }}" required>
+                                            value="{{ $perusahaan->nib->no_izin }}" required>
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label>Nama Perusahaan</label>
                                         <input name="nama_perusahaan" type="text" class="form-control"
-                                            value="{{ $perusahaan->nama_perusahaan }}" required>
+                                            value="{{ $perusahaan->nib->nama_perusahaan }}" required>
                                     </div>
                                 </div>
 
@@ -140,7 +140,7 @@
 
                                 <div class="card-footer">
                                     <div class="row">
-                                        <div class="col-md-6 text-right">
+                                        <div class="col-md-12 text-right">
                                             <button type="submit" class="btn btn-success">Simpan</button>
                                         </div>
                                     </div>

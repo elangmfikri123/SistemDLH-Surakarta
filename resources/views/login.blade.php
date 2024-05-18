@@ -113,6 +113,12 @@
     <script src="{{ asset('template/assets/js/custom.js') }}"></script>
 
     <!-- Page Specific JS File -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if (session('message'))
+            Swal.fire('Perhatian', '{{ session('message') }}', 'warning');
+        @endif
+    </script>
 </body>
 
 </html>

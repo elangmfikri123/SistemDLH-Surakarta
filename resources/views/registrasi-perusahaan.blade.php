@@ -14,7 +14,6 @@
                             <h4 class="text-dark">Form Registrasi Perusahaan</h4>
                         </div>
 
-
                         <div class="card-body">
                             <form action="{{ url('/store-perusahaan') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
@@ -22,11 +21,13 @@
                                 <div class="form-row justify-content-around">
                                     <div class="form-group col-md-5">
                                         <label>No Izin Kegiatan Usaha (NIB)</label>
-                                        <input name="no_izin" type="text" class="form-control" required>
+                                        <input name="no_izin" type="text" class="form-control"
+                                            value="{{ $nib->no_izin }}" readonly>
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label>Nama Perusahaan</label>
-                                        <input name="nama_perusahaan" type="text" class="form-control" required>
+                                        <input name="nama_perusahaan" type="text" class="form-control"
+                                            value="{{ $nib->nama_perusahaan }}" readonly>
                                     </div>
                                 </div>
 
@@ -93,7 +94,7 @@
                                 </div>
                                 <div class="form-row justify-content-around">
                                     <div class="form-group col-md-5">
-                                        <label>Titik Koordinat OUTFAL</label required>
+                                        <label>Titik Koordinat OUTFALL</label required>
                                         <input name="tikor_oval" type="text" class="form-control" required>
                                     </div>
                                     <div class="form-group col-md-5">
@@ -114,7 +115,7 @@
 
                                 <div class="card-footer">
                                     <div class="row">
-                                        <div class="col-md-6 text-right">
+                                        <div class="col-md-12 text-right">
                                             <button type="submit" class="btn btn-success">Simpan</button>
                                         </div>
                                     </div>

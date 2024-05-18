@@ -48,20 +48,24 @@ class User extends Authenticatable
     {
         return $this->hasMany(Laboratorium::class);
     }
-     public function perusahaan()
+    public function perusahaan()
     {
         return $this->hasOne(Perusahaan::class);
     }
+    public function nib()
+    {
+        return $this->hasOne(NIB::class);
+    }
     public function bidang()
     {
-    return $this->hasMany(Bidang::class);
+        return $this->hasMany(Bidang::class);
     }
     public function laporan()
     {
-    return $this->hasMany(Laporan::class);
+        return $this->hasMany(Laporan::class);
     }
     public function pimpinan()
     {
-    return $this->hasMany(Pimpinan::class);
+        return $this->hasMany(Pimpinan::class);
     }
 }

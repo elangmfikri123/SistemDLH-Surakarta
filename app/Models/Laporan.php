@@ -53,4 +53,12 @@ class Laporan extends Model
     {
         return $this->hasMany(Feedback::class, 'laporan_id');
     }
+    public function batasuji()
+    {
+        return $this->hasMany(BatasUji::class, 'laporan_id');
+    }
+    public function lokasisampling()
+    {
+        return $this->hasMany(LokasiSampling::class, 'laporan_id');
+    }
 }

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BatasUji;
+use App\Models\NIB;
 use App\Models\User;
 use App\Models\Bidang;
-use App\Models\Feedback;
 use App\Models\Laporan;
+use App\Models\Feedback;
 use App\Models\Perusahaan;
 use App\Models\Laboratorium;
 use CreateTableLaboratorium;
@@ -57,8 +59,25 @@ class AdminController extends Controller
 
     public function userList()
     {
-        $users = User::all();
+        $users = User::where('roles', 'user')->get();
         return view('admin.daftar_user', compact('users'));
+    }
+    public function adminList()
+    {
+        $users = User::where('roles', 'admin')->get();
+        return view('admin.daftar_admin', compact('users'));
+    }
+    public function aktifasi($id)
+    {
+        $user = User::find($id);
+        if ($user->status == 'aktif') {
+            $user->status = 'nonaktif';
+            $user->save();
+        } else if ($user->status == 'nonaktif') {
+            $user->status = 'aktif';
+            $user->save();
+        }
+        return redirect()->back()->with('status', 'Berhasil memperbarui status Akun Baru.');
     }
     public function addFeedback($id)
     {
@@ -160,21 +179,26 @@ class AdminController extends Controller
     {
         return response()->download(public_path('fileperusahaan/' . $filescan_perusahaan));
     }
-
     public function perusahaanDelete($perusahaanID)
     {
         Perusahaan::destroy($perusahaanID);
         return redirect()->back();
     }
-
     public function laboratoriumList()
     {
         $lab = Laboratorium::all();
         return view('admin.daftar_laboratorium', compact('lab'));
     }
-    public function postLab()
+    public function postLab(Request $request)
     {
         $user = request()->user();
+        $validator = Validator::make($request->all(), [
+            'nama_lab' => 'required |max:250| unique:table_laboratorium,nama_lab',
+            'email_lab' => 'required | email |unique:table_laboratorium,email_lab,'
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator);
+        }
         Laboratorium::create([
             'user_id' => $user->id,
             'nama_lab' => request('nama_lab'),
@@ -182,7 +206,7 @@ class AdminController extends Controller
             'telf_lab' => request('telf_lab'),
             'email_lab' => request('email_lab'),
         ]);
-        return redirect()->back()->with('status', 'Data Laboratorium Baru Berhasil Ditambahkan.');
+        return redirect()->back();
     }
     public function editLab($labID)
     {
@@ -209,14 +233,7 @@ class AdminController extends Controller
         ];
         return view('admin.daftar_laporan', $data);
     }
-    public function laporandetail($id)
-    {
-        $laporan = Laporan::find($id);
-        $data = [
-            'laporan' => $laporan,
-        ];
-        return view('admin.detail_laporan', $data);
-    }
+
     public function status_disetuju($id)
     {
         $laporan = Laporan::find($id);
@@ -248,20 +265,123 @@ class AdminController extends Controller
 
     public function rekapitulasi($tahun, $bulan)
     {
-        $perusahaan = DB::select('SELECT nama_perusahaan, B.* 
-        FROM
-        (select `perusahaan_id`, 
-        year(`created_at`) AS tahun, 
-        month(`created_at`) AS bulan,  
-        count(`id`) AS laporan  
-        from table_laporan  
-        group by `perusahaan_id`, 
-        year(`created_at`),
-        month(`created_at`) order by `perusahaan_id`,
-        year(`created_at`),
-        month(`created_at`))AS B
-        INNER JOIN table_perusahaan ON table_perusahaan.id = B.perusahaan_id where tahun=? AND bulan =?', [$tahun, $bulan]);
+        // dd($bulan);
+        $perusahaan = Perusahaan::whereHas(
+            'laporan',
+            function ($q) use ($bulan, $tahun) {
+                $q->whereMonth('created_at', '=', (int)$bulan);
+                $q->whereYear('created_at', '=', (int)$tahun);
+            }
+        )->with('laporan')->get();
+        $perusahaan_no = Perusahaan::whereDoesntHave(
+            'laporan',
+            function ($q) use ($bulan, $tahun) {
+                $q->whereMonth('created_at', '=', (int)$bulan);
+                $q->whereYear('created_at', '=', (int)$tahun);
+            }
+        )->with('laporan')->get();
+        return view('admin.rekapitulasi', compact('perusahaan', 'perusahaan_no'));
+    }
 
-        return view('admin.rekapitulasi', compact('perusahaan'));
+    public function aktifasiPerusahaan($id)
+    {
+        $user = Laboratorium::find($id);
+        if ($user->status == 'aktif') {
+            $user->status = 'nonaktif';
+            $user->save();
+        } else if ($user->status == 'nonaktif') {
+            $user->status = 'aktif';
+            $user->save();
+        }
+        return redirect()->back()->with('status', 'Berhasil memperbarui status laboratorium.');
+    }
+
+    public function addkadar($id)
+    {
+        $laporan = Laporan::find($id);
+        $batasuji = $this->getBatasUji($id);
+
+        // dd($batasuji);
+        return view('admin.add_kadar', compact('laporan', 'batasuji'));
+    }
+
+    public function laporandetail($id)
+    {
+        $laporan = Laporan::find($id);
+
+        $batasuji = $this->getBatasUji($id);
+        foreach ($batasuji as $key => $value) {
+            $nama = $key;
+            if ($value && $laporan->$nama != null) {
+                if ((float)$laporan->$nama > (float)$value->batas_bawah && (float) $laporan->$nama < (float)$value->batas_atas) {
+                    $batasuji->put($nama . '_normal', true);
+                } else {
+                    $batasuji->put($nama . '_normal', false);
+                }
+            } else {
+                $batasuji->put($nama . '_normal', true);
+            }
+        }
+
+
+        $data = [
+            'laporan' => $laporan,
+            'batasuji' => $batasuji,
+        ];
+
+        return view('admin.detail_laporan', $data);
+    }
+
+    public function getBatasUji($id)
+    {
+        $batasuji = collect([]);
+        $batasuji->put('jmlh_ph', BatasUji::where('laporan_id', $id)->where('nama_uji', 'jmlh_ph')->first());
+        $batasuji->put('jmlh_suhu', BatasUji::where('laporan_id', $id)->where('nama_uji', 'jmlh_suhu')->first());
+        $batasuji->put('jmlh_amoniak', BatasUji::where('laporan_id', $id)->where('nama_uji', 'jmlh_amoniak')->first());
+        $batasuji->put('jmlh_pshospat', BatasUji::where('laporan_id', $id)->where('nama_uji', 'jmlh_pshospat')->first());
+        $batasuji->put('jmlh_tss', BatasUji::where('laporan_id', $id)->where('nama_uji', 'jmlh_tss')->first());
+        $batasuji->put('jmlh_bod', BatasUji::where('laporan_id', $id)->where('nama_uji', 'jmlh_bod')->first());
+        $batasuji->put('jmlh_cod', BatasUji::where('laporan_id', $id)->where('nama_uji', 'jmlh_cod')->first());
+
+        return $batasuji;
+    }
+
+    public function addkadarStore(Request $request, $id)
+    {
+        $laporan = Laporan::find($id);
+        $batas = collect($request);
+        $batas->forget('_token');
+        $validator = Validator::make(request()->all(), [
+            'jmlh_ph' => 'required',
+            'jmlh_suhu' => 'required',
+            'jmlh_amoniak' => 'required',
+            'jmlh_pshospat' => 'required',
+            'jmlh_tss' => 'required',
+            'jmlh_bod' => 'required',
+            'jmlh_cod' => 'required',
+        ]);
+
+        if (!$laporan) {
+            return redirect()->back();
+        }
+        if ($validator->fails()) {
+            return redirect()->back()->withInput()->withErrors($validator);
+        }
+
+        foreach ($batas as $key => $value) {
+            BatasUji::updateOrCreate(
+                [
+                    //data lama jika ada
+                    'laporan_id' => $laporan->id,
+                    'nama_uji' => $key,
+                ],
+                [
+                    //data baru  
+                    'batas_atas' => $value['atas'],
+                    'batas_bawah' => $value['bawah'],
+                ]
+            );
+        }
+        return redirect('admin/laporan/' . $id . '/detail')->with('message', 'Kadar Maksimum Ditetapkan.');
     }
 }

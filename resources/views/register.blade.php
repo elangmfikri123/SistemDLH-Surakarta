@@ -39,8 +39,23 @@
                             <h3>Register</h3>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="{{ url('/register') }}">
+                            <form method="POST" action="" enctype="multipart/form-data">
                                 @csrf
+                                <div class="form-group @error('email') is-invalid @enderror">
+                                    <label for="first_name">Nama Perusahaan</label>
+                                    <input id="first_name" type="text" class="form-control" name="nama_perusahaan"
+                                        autofocus>
+                                    @error('name')
+                                        <div for="Password" class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-group @error('email') is-invalid @enderror">
+                                    <label for="first_name">No Izin (NIB)</label>
+                                    <input id="first_name" type="text" class="form-control" name="no_izin" autofocus>
+                                    @error('name')
+                                        <div for="Password" class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
                                 <div class="form-group @error('email') is-invalid @enderror">
                                     <label for="first_name">Nama Pengguna</label>
                                     <input id="first_name" type="text" class="form-control" name="name" autofocus>

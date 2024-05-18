@@ -16,9 +16,6 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="text-dark">Data User</h4>
-                            <button type="button" class="btn btn-success float-right" data-toggle="modal"
-                                data-target="#exampleModal"><i class="fa fa-plus"></i> Tambah
-                            </button>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -27,8 +24,10 @@
                                         <tr>
                                             <th class="text-center sorting_asc">No</th>
                                             <th class="text-center">Nama User</th>
+                                            <th class="text-center">Nama Perusahan</th>
+                                            <th class="text-center">NIB</th>
                                             <th class="text-center">Email</th>
-                                            <th class="text-center">Role</th>
+                                            <th class="text-center">Status</th>
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -37,8 +36,22 @@
                                             <tr>
                                                 <td class="text-center">{{ $key + 1 }}</td>
                                                 <td class="text-center">{{ $u->name }}</td>
+                                                <td class="text-center">
+                                                    {{ $u->nib ? $u->nib->nama_perusahaan : 'Tidak ada' }}</td>
+                                                <td class="text-center">
+                                                    {{ $u->nib ? $u->nib->no_izin : 'Tidak ada' }}</td>
                                                 <td class="text-center">{{ $u->email }}</td>
-                                                <td class="text-center">{{ $u->roles }}</td>
+                                                @if ($u->status == 'nonaktif')
+                                                    <td class="text-center"><button
+                                                            class="btn py-1 btn-danger aktifasi
+                                                            aktifasi"
+                                                            data-id="{{ $u->id }}">Non-Aktif</button>
+                                                    </td>
+                                                @elseif ($u->status == 'aktif')
+                                                    <td class="text-center"><button class="btn py-1 btn-success aktifasi"
+                                                            data-id="{{ $u->id }}">Aktif</button>
+                                                    </td>
+                                                @endif
                                                 <td>
                                                     <div class="text-center">
                                                         <button type="button" href="#" class="btn btn-danger"
@@ -114,8 +127,8 @@
     </div>
 
     @foreach ($users as $u)
-        <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal{{ $u->id }}" style="display: none;"
-            aria-hidden="true">
+        <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal{{ $u->id }}"
+            style="display: none;" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -135,4 +148,26 @@
             </div>
         </div>
     @endforeach
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if (session('status'))
+            Swal.fire('Update Sukses!', '{{ session('status') }}', 'success');
+        @endif
+        $(document).on('click', '.aktifasi', function() {
+            var id = $(this).attr("data-id");
+            Swal.fire({
+                title: "Ubah Status User?",
+                text: "ID User : " + id,
+                icon: "question",
+                confirmButtonColor: "#47c363",
+                confirmButtonText: "Ubah",
+                cancelButtonText: "Batal",
+                showCancelButton: true,
+            }).then((result) => {
+                window.location = window.location.href + '/' + id + '/aktifasi';
+            });
+        });
+    </script>
 @endsection

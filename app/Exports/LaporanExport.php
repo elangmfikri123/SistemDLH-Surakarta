@@ -17,11 +17,11 @@ class LaporanExport implements FromCollection, WithHeadings
     public function collection()
     {
         $ar_laporan = DB::table('table_laporan')
-            ->join('table_perusahaan', 'table_perusahaan.id', '=', 'table_laporan.perusahaan_id')
+            ->join('table_nib', 'table_nib.id', '=', 'table_laporan.perusahaan_id')
             ->join('table_laboratorium', 'table_laboratorium.id', '=', 'table_laporan.laboratorium_id')
             ->select(
                 'table_laporan.kode',
-                'table_perusahaan.nama_perusahaan',
+                'table_nib.nama_perusahaan',
                 'table_laboratorium.nama_lab',
                 'table_laporan.nama_petugas',
                 'table_laporan.jenis_sampling',

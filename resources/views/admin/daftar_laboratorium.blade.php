@@ -33,6 +33,7 @@
                                             <th>Alamat</th>
                                             <th>No Handphone</th>
                                             <th>E-Mail</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -44,6 +45,17 @@
                                                 <td>{{ $item->alamat_lab }}</td>
                                                 <td>{{ $item->telf_lab }}</td>
                                                 <td>{{ $item->email_lab }}</td>
+                                                @if ($item->status == 'nonaktif')
+                                                    <td class="text-center"><button
+                                                            class="btn py-1 btn-danger aktifasi
+                                                        aktifasi"
+                                                            data-id="{{ $item->id }}">Non-Aktif</button>
+                                                    </td>
+                                                @elseif ($item->status == 'aktif')
+                                                    <td class="text-center"><button class="btn py-1 btn-success aktifasi"
+                                                            data-id="{{ $item->id }}">Aktif</button>
+                                                    </td>
+                                                @endif
                                                 <td>
                                                     <div class="text-center">
                                                         <button type="button" href="#" class="btn btn-primary"
@@ -68,7 +80,8 @@
     </div>
 
     {{-- modal create --}}
-    <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal" style="display: none;" aria-hidden="true">
+    <div class="modal fade  @if ($errors->any()) show @endif" tabindex="-1" role="dialog" id="exampleModal"
+        style="display: none;" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -78,6 +91,15 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form action="{{ url('admin/perusahaan/laboratorium') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
@@ -173,3 +195,38 @@
         </div>
     @endforeach
 @endsection
+@push('script')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            @if (session('status'))
+                Swal.fire('Update Sukses!', '{{ session('status') }}', 'success');
+            @endif
+            $(document).on('click', '.aktifasi', function() {
+                var id = $(this).attr("data-id");
+                Swal.fire({
+                    title: "Ubah Status Laboratorium?",
+                    text: "ID Laborat : " + id,
+                    icon: "question",
+                    confirmButtonColor: "#47c363",
+                    confirmButtonText: "Ubah",
+                    cancelButtonText: "Batal",
+                    showCancelButton: true,
+                }).then((result) => {
+                    window.location = window.location.href + '/' + id + '/aktifasi';
+                });
+            });
+            @if ($errors->any() || session('gagal'))
+                Swal.fire({
+                    icon: "error",
+                    title: "Gagal Menambahkan",
+                    text: "Data sudah tersedia.",
+                    showConfirmButton: true,
+                    confirmButtonColor: "#47c363",
+                });
+            @endif
+        });
+    </script>
+@endpush

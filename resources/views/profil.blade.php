@@ -53,11 +53,11 @@
                                     <tbody>
                                         <tr>
                                             <th class="col-5" scope="col">No. Izin Kegiatan Usaha</th>
-                                            <td>{{ $p->no_izin }}</td>
+                                            <td>{{ $p->nib->no_izin }}</td>
                                         </tr>
                                         <tr>
                                             <th class="col-5" scope="col">Nama Perusahaan</th>
-                                            <td>{{ $p->nama_perusahaan }}</td>
+                                            <td>{{ $p->nib->nama_perusahaan }}</td>
                                         </tr>
                                         <tr>
                                             <th class="col-5" scope="col">Alamat Lengkap</th>
@@ -100,7 +100,7 @@
                                             <td>{{ $p->tikor_ipal }}</td>
                                         </tr>
                                         <tr>
-                                            <th class="col-5" scope="col">Titik Koordinat OUTVAL</th>
+                                            <th class="col-5" scope="col">Titik Koordinat OUTFALL</th>
                                             <td>{{ $p->tikor_oval }}</td>
                                         </tr>
                                         <tr>

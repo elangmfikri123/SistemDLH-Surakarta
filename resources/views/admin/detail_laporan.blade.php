@@ -4,7 +4,8 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Laporan</h1>
+                <h1>Detail Laporan - {{ $laporan->perusahaan->nib->nama_perusahaan }} - {{ $laporan->jenis_sampling }}
+                </h1>
             </div>
 
             <div class="row">
@@ -20,7 +21,7 @@
                                         </tr>
                                         <tr>
                                             <th class="col-2" scope="col">Nama Perusahaan</th>
-                                            <td>{{ $laporan->perusahaan->nama_perusahaan }}</td>
+                                            <td>{{ $laporan->perusahaan->nib->nama_perusahaan }}</td>
                                         </tr>
                                         <tr>
                                             <th class="col-2" scope="col">Nama Laboratorium</th>
@@ -31,11 +32,11 @@
                                             <td>{{ $laporan->nama_petugas }}</td>
                                         </tr>
                                         <tr>
-                                            <th class="col-5" scope="col">Jenis Sampel</th>
+                                            <th class="col-5" scope="col">Lokasi Sampling</th>
                                             <td>{{ $laporan->jenis_sampling }}</td>
                                         </tr>
                                         <tr>
-                                            <th class="col-5" scope="col">Jenis Parameter</th>
+                                            <th class="col-5" scope="col">Jenis Sampel</th>
                                             <td>{{ $laporan->parameter }}</td>
                                         </tr>
                                         <tr>
@@ -84,15 +85,33 @@
                                             </tr>
                                             <tr>
                                                 <th class="col-5" scope="col">pH</th>
-                                                <td>{{ $laporan->jmlh_ph }}</td>
+                                                <td>{{ $laporan->jmlh_ph }}
+                                                    @if (!$batasuji['jmlh_ph_normal'])
+                                                        <i class="text-danger">- Melebihi Baku Mutu</i>
+                                                    @else
+                                                        <i>- Normal</i>
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th class="col-5" scope="col">Suhu</th>
-                                                <td>{{ $laporan->jmlh_suhu }}</td>
+                                                <td>{{ $laporan->jmlh_suhu }}
+                                                    @if (!$batasuji['jmlh_suhu_normal'])
+                                                        <i class="text-danger">- Melebihi Baku Mutu</i>
+                                                    @else
+                                                        <i>- Normal</i>
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th class="col-5" scope="col">TSS</th>
-                                                <td>{{ $laporan->jmlh_tss }}</td>
+                                                <td>{{ $laporan->jmlh_tss }}
+                                                    @if (!$batasuji['jmlh_tss_normal'])
+                                                        <i class="text-danger">- Melebihi Baku Mutu</i>
+                                                    @else
+                                                        <i>- Normal</i>
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th class="col-5" scope="col">TDS</th>
@@ -100,15 +119,33 @@
                                             </tr>
                                             <tr>
                                                 <th class="col-5" scope="col">BOD</th>
-                                                <td>{{ $laporan->jmlh_bod }}</td>
+                                                <td>{{ $laporan->jmlh_bod }}
+                                                    @if (!$batasuji['jmlh_bod_normal'])
+                                                        <i class="text-danger">- Melebihi Baku Mutu</i>
+                                                    @else
+                                                        <i>- Normal</i>
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th class="col-5" scope="col">COD</th>
-                                                <td>{{ $laporan->jmlh_cod }}</td>
+                                                <td>{{ $laporan->jmlh_cod }}
+                                                    @if (!$batasuji['jmlh_cod_normal'])
+                                                        <i class="text-danger">- Melebihi Baku Mutu</i>
+                                                    @else
+                                                        <i>- Normal</i>
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th class="col-5" scope="col">Amoniak (NH₃₋N)</th>
-                                                <td>{{ $laporan->jmlh_amoniak }}</td>
+                                                <td>{{ $laporan->jmlh_amoniak }}
+                                                    @if (!$batasuji['jmlh_amoniak_normal'])
+                                                        <i class="text-danger">- Melebihi Baku Mutu</i>
+                                                    @else
+                                                        <i>- Normal</i>
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th class="col-5" scope="col">Minyak & Lemak</th>
@@ -146,7 +183,13 @@
                                             </tr>
                                             <tr>
                                                 <th class="col-5" scope="col">Phosphat (PO4-P)</th>
-                                                <td>{{ $laporan->jmlh_pshospat }}</td>
+                                                <td>{{ $laporan->jmlh_pshospat }}
+                                                    @if (!$batasuji['jmlh_pshospat_normal'])
+                                                        <i class="text-danger">- Melebihi Baku Mutu</i>
+                                                    @else
+                                                        <i>- Normal</i>
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th class="col-5" scope="col">Fenol Total</th>
@@ -194,11 +237,15 @@
                             </div>
                         </div>
 
-                        <div class="modal-footer"><a href="{{ url('admin/feedback/' . $laporan->id . '/tambah') }}"
-                                class="btn btn-primary">Add Feedback</a>
+                        <div class="modal-footer">
+                            <a href="{{ url('admin/kadar/' . $laporan->id . '/tambah') }}" class="btn btn-warning">Kadar
+                                Maksimum</a>
+                            <a href="{{ url('admin/feedback/' . $laporan->id . '/tambah') }}" class="btn btn-primary">Add
+                                Feedback</a>
                             <a href="/status_disetuju/{{ $laporan->id }}" type="button"
                                 class="btn btn-success">Setujui</a>
-                            <a href="/status_ditolak/{{ $laporan->id }}" type="button" class="btn btn-danger">Tolak</a>
+                            <a href="/status_ditolak/{{ $laporan->id }}" type="button"
+                                class="btn btn-danger">Tolak</a>
                         </div>
                     </div>
                 </div>

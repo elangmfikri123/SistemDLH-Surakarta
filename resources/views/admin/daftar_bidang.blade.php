@@ -29,18 +29,24 @@
                                     <thead class="thead-dark">
                                         <tr>
                                             <th class="text-center sorting_asc">No</th>
-                                            <th>Nama Bidang</th>
-                                            <th>Action</th>
+                                            <th class="text-center">Nama Bidang</th>
+                                            <th class="text-center">Jumlah Perusahaan</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($bidang as $key => $b)
                                             <tr>
                                                 <td class="text-center">{{ $key + 1 }}</td>
-                                                <td>{{ $b->nama_bidang }}</td>
-                                                <td>
+                                                <td class="text-center">{{ $b->nama_bidang }}</td>
+                                                <td class="text-center">{{ $b->perusahaan->count() }}</td>
+                                                <td class="text-center">
                                                     <div class="text-center">
                                                         <button type="button" href="#" class="btn btn-primary"
+                                                            data-toggle="modal"
+                                                            data-target="#detailModal{{ $b->id }}"><i
+                                                                class="fa fa-eye"></i></button>
+                                                        <button type="button" href="#" class="btn btn-warning"
                                                             data-toggle="modal"
                                                             data-target="#updateModal{{ $b->id }}"><i
                                                                 class="far fa-edit"></i></button>
@@ -87,6 +93,7 @@
         </div>
     </div>
 
+
     @foreach ($bidang as $b)
         <div class="modal fade" tabindex="-1" role="dialog" id="updateModal{{ $b->id }}" style="display: none;"
             aria-hidden="true">
@@ -118,8 +125,8 @@
     @endforeach
 
     @foreach ($bidang as $b)
-        <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal{{ $b->id }}" style="display: none;"
-            aria-hidden="true">
+        <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal{{ $b->id }}"
+            style="display: none;" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -133,6 +140,40 @@
                     </div>
                     <div class="modal-footer bg-whitesmoke br">
                         <a href="{{ url('/admin/' . $b->id . '/bidang-delete') }}" class="btn btn-danger">Hapus</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    @foreach ($bidang as $b)
+        <div class="modal fade" tabindex="-1" role="dialog" id="detailModal{{ $b->id }}"
+            style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Daftar Perusahaan Bidang </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="col-md">
+                        <table class="table table-bordered table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th class="text-center sorting_asc">No</th>
+                                    <th class="text-center">Nama Perusahaan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($b->perusahaan as $key => $perusahaan)
+                                    <tr>
+                                        <td class="text-center">{{ $key + 1 }}</td>
+                                        <td class="text-center">{{ $perusahaan->nib->nama_perusahaan }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
                 'email' => 'admin@gmail.com',
                 'password' => Hash::make('12345678'),
                 'roles' => 'admin',
+                'status' => 'aktif',
             ],
             [
                 'name' => 'User',
@@ -28,9 +29,8 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('12345678'),
                 'roles' => 'user',
             ],
-        ])->each(function($users){
+        ])->each(function ($users) {
             User::create($users);
         });
     }
-    
 }

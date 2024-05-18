@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use stdClass;
 use App\Models\Laporan;
+use App\Models\BatasUji;
 use App\Models\Perusahaan;
 use App\Models\Laboratorium;
 use Illuminate\Http\Request;
@@ -28,16 +30,57 @@ class LaporanController extends Controller
     public function laporandetail($id)
     {
         $laporan = Laporan::find($id);
+
+        $batasuji = $this->getBatasUji($id);
+        foreach ($batasuji as $key => $value) {
+            $nama = $key;
+            if ($value && $laporan->$nama != null) {
+                if ((float)$laporan->$nama > (float)$value->batas_bawah && (float) $laporan->$nama < (float)$value->batas_atas) {
+                    $batasuji->put($nama . '_normal', true);
+                } else {
+                    $batasuji->put($nama . '_normal', false);
+                }
+            } else {
+                $batasuji->put($nama . '_normal', true);
+            }
+        }
+
+
         $data = [
             'laporan' => $laporan,
+            'batasuji' => $batasuji,
         ];
         return view('detail_laporan', $data);
     }
+    public function getBatasUji($id)
+    {
+        $batasuji = collect([]);
+
+        $batasuji->put('jmlh_ph', BatasUji::where('laporan_id', $id)->where('nama_uji', 'jmlh_ph')->first());
+
+        $batasuji->put('jmlh_suhu', BatasUji::where('laporan_id', $id)->where('nama_uji', 'jmlh_suhu')->first());
+
+        $batasuji->put('jmlh_amoniak', BatasUji::where('laporan_id', $id)->where('nama_uji', 'jmlh_amoniak')->first());
+
+        $batasuji->put('jmlh_pshospat', BatasUji::where('laporan_id', $id)->where('nama_uji', 'jmlh_pshospat')->first());
+
+        $batasuji->put('jmlh_tss', BatasUji::where('laporan_id', $id)->where('nama_uji', 'jmlh_tss')->first());
+
+        $batasuji->put('jmlh_bod', BatasUji::where('laporan_id', $id)->where('nama_uji', 'jmlh_bod')->first());
+
+        $batasuji->put('jmlh_cod', BatasUji::where('laporan_id', $id)->where('nama_uji', 'jmlh_cod')->first());
+
+        return $batasuji;
+    }
     public function laporanbaru()
     {
+        $string = '0,1';
+        $data = '0,22231';
+        $banding = (float) str_replace(',', '.', $string) - (float)str_replace(',', '.', $data);
+
         $user = request()->user();
         $perusahaan = Perusahaan::where('user_id', $user->id)->get();
-        $lab = Laboratorium::pluck('nama_lab', 'id');
+        $lab = Laboratorium::where('status', 'aktif')->pluck('nama_lab', 'id');
         $kode = Laporan::kode();
         if (empty($perusahaan[0])) {
             return redirect('registrasi-perusahaan/formpimpinan');
@@ -48,7 +91,7 @@ class LaporanController extends Controller
             'perusahaan' => $perusahaan
         ]);
     }
-    public function postLaporan()
+    public function postLaporan(Request $request)
     {
         $user = request()->user();
         $validator = Validator::make(request()->all(), [
@@ -62,9 +105,9 @@ class LaporanController extends Controller
             request()->filescan_laporan->move(public_path('filelaporan/'), $filescan);
         }
 
-        Laporan::create([
+        $laporan =  Laporan::create([
             'user_id' => $user->id,
-            'perusahaan_id' => request('perusahaan_id'),
+            'perusahaan_id' => $user->perusahaan->id,
             'laboratorium_id' => request('laboratorium_id'),
             'status_id' => request('status_id'),
             'kode' => request('kode'),
@@ -102,17 +145,19 @@ class LaporanController extends Controller
             'jmlh_hunian' => request('jmlh_hunian'),
             'jmlh_bed' => request('jmlh_bed'),
         ]);
-
+        if (!$laporan) {
+            return "gagal woi";
+        }
         return redirect('laporan');
     }
     public function editLaporan($id)
     {
         $user = request()->user();
-        $perusahaan = Perusahaan::where('user_id', $user->id)->get();
+        $perusahaan = Perusahaan::where('user_id', $user->id)->first();
         $lab = Laboratorium::pluck('nama_lab', 'id');
         $kode = Laporan::kode();
         $laporan = Laporan::find($id);
-        if (empty($perusahaan[0])) {
+        if (!$perusahaan) {
             return redirect('registrasi-perusahaan/formpimpinan');
         }
         return view('editlaporan', [
@@ -144,7 +189,6 @@ class LaporanController extends Controller
             'perusahaan_id' => $request->perusahaan_id,
             'laboratorium_id' => $request->laboratorium_id,
             'status_id' => $request->status_id,
-            'kode' => $request->kode,
             'nama_petugas' => $request->nama_petugas,
             'jenis_sampling' => $request->jenis_sampling,
             'parameter' => $request->parameter,

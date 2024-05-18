@@ -28,6 +28,7 @@
                                             <th>Alamat</th>
                                             <th>No Handphone</th>
                                             <th>E-Mail</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -39,6 +40,13 @@
                                                 <td>{{ $item->alamat_lab }}</td>
                                                 <td>{{ $item->telf_lab }}</td>
                                                 <td>{{ $item->email_lab }}</td>
+                                                @if ($item->status == 'aktif')
+                                                    <td><span class="badge badge-success">{{ $item->status }}</span>
+                                                    </td>
+                                                @elseif ($item->status == 'nonaktif')
+                                                    <td><span class="badge badge-warning">{{ $item->status }}</span>
+                                                    </td>
+                                                @endif
                                                 <td>
                                                     <div class="text center">
                                                         <button type="button" href="#" class="btn btn-primary"
@@ -118,8 +126,8 @@
                             @csrf
                             <div class="form-group">
                                 <label>Nama Laboratorium</label>
-                                <input name="nama_lab" type="text" class="form-control" placeholder="Nama Laboratorium"
-                                    value="{{ $item->nama_lab }}" readonly>
+                                <input name="nama_lab" type="text" class="form-control"
+                                    placeholder="Nama Laboratorium" value="{{ $item->nama_lab }}" readonly>
                             </div>
                             <div class="form-group">
                                 <label>Alamat</label>
@@ -168,3 +176,19 @@
         </div>
     @endforeach
 @endsection
+
+@push('script')
+    <script>
+        $(document).ready(function() {
+            @if ($errors->any() || session('gagal'))
+                Swal.fire({
+                    icon: "error",
+                    title: "Gagal Menambahkan",
+                    text: "Data sudah tersedia.",
+                    showConfirmButton: true,
+                    confirmButtonColor: "#47c363",
+                });
+            @endif
+        });
+    </script>
+@endpush

@@ -6,8 +6,6 @@
             <div class="section-header">
                 <h1>Tambah Laporan</h1>
             </div>
-
-
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -26,9 +24,9 @@
                                         Perusahaan</label>
                                     <div class="col-sm-12 col-md-5">
                                         <input id="perusahaan" type="text" required="required" class="form-control boxed"
-                                            value="{{ $perusahaan[0]->nama_perusahaan }}" readonly>
+                                            value="{{ $perusahaan[0]->nib->nama_perusahaan }}" readonly>
                                         <input id="perusahaan" name="perusahaan_id" type="hidden" required="required"
-                                            class="form-control boxed" value="{{ $perusahaan[0]->id }}" readonly>
+                                            class="form-control boxed" value="{{ $perusahaan[0]->nib->id }}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
@@ -93,123 +91,151 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-2">
                                         <label>Debit Air Limbah (Inlet)</label>
-                                        <input type="text" class="form-control" name="jmlh_inlet">
+                                        <input type="number" class="form-control" name="jmlh_inlet" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Debit Air Limbah (Outlet)</label>
-                                        <input type="text" class="form-control" name="jmlh_outlet">
+                                        <input type="number" class="form-control" name="jmlh_outlet" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Debit Air Baku</label>
-                                        <input type="text" class="form-control" name="jmlh_debit">
+                                        <input type="number" class="form-control" name="jmlh_debit" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>pH</label>
-                                        <input type="text" class="form-control" name="jmlh_ph">
+                                        <input type="number" class="form-control" name="jmlh_ph" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Suhu</label>
-                                        <input type="text" class="form-control" name="jmlh_suhu">
+                                        <input type="number" class="form-control" name="jmlh_suhu" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>TSS</label>
-                                        <input type="text" class="form-control" name="jmlh_tss">
+                                        <input type="number" class="form-control" name="jmlh_tss" step="0.00000001"
+                                            min="0">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-2">
                                         <label>TDS</label>
-                                        <input type="text" class="form-control" name="jmlh_tds">
+                                        <input type="number" class="form-control" name="jmlh_tds" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>COD</label>
-                                        <input type="text" class="form-control" name="jmlh_cod">
+                                        <input type="number" class="form-control" name="jmlh_cod" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>BOD</label>
-                                        <input type="text" class="form-control" name="jmlh_bod">
+                                        <input type="number" class="form-control" name="jmlh_bod" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Amoniak (NH₃₋N)</label>
-                                        <input type="text" class="form-control" name="jmlh_amoniak">
+                                        <input type="number" class="form-control" name="jmlh_amoniak" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Minyak & Lemak</label>
-                                        <input type="text" class="form-control" name="jmlh_minyak">
+                                        <input type="number" class="form-control" name="jmlh_minyak" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Total Coliform</label>
-                                        <input type="text" class="form-control" name="jmlh_caliform">
+                                        <input type="number" class="form-control" name="jmlh_caliform"
+                                            step="0.00000001" min="0">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-2">
                                         <label>Bakteri Coliform</label>
-                                        <input type="text" class="form-control" name="jmlh_bakteri">
+                                        <input type="number" class="form-control" name="jmlh_bakteri" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>MBAS</label>
-                                        <input type="text" class="form-control" name="jmlh_mbas">
+                                        <input type="number" class="form-control" name="jmlh_mbas" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Sulfida ( S )</label>
-                                        <input type="text" class="form-control" name="jmlh_sulfida">
+                                        <input type="number" class="form-control" name="jmlh_sulfida" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Nitrat (NO3-N)</label>
-                                        <input type="text" class="form-control" name="jmlh_nitrat">
+                                        <input type="number" class="form-control" name="jmlh_nitrat" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Nitrit (NO2-N)</label>
-                                        <input type="text" class="form-control" name="jmlh_nitrit">
+                                        <input type="number" class="form-control" name="jmlh_nitrit" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Phosphat (PO4-P)</label>
-                                        <input type="text" class="form-control" name="jmlh_pshospat">
+                                        <input type="number" class="form-control" name="jmlh_pshospat"
+                                            step="0.00000001" min="0">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-2">
                                         <label>Fenol Total</label>
-                                        <input type="text" class="form-control" name="jmlh_fenol">
+                                        <input type="number" class="form-control" name="jmlh_fenol" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Khrom Total (Cr)</label>
-                                        <input type="text" class="form-control" name="jmlh_khorm">
+                                        <input type="number" class="form-control" name="jmlh_khorm" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Seng (ZN)</label>
-                                        <input type="text" class="form-control" name="jmlh_seng">
+                                        <input type="number" class="form-control" name="jmlh_seng" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Klorida</label>
-                                        <input type="text" class="form-control" name="jmlh_klorida">
+                                        <input type="number" class="form-control" name="jmlh_klorida" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Klor Bebas</label>
-                                        <input type="text" class="form-control" name="jmlh_klor">
+                                        <input type="number" class="form-control" name="jmlh_klor" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Fluorida (F)</label>
-                                        <input type="text" class="form-control" name="jmlh_fluorida">
+                                        <input type="number" class="form-control" name="jmlh_fluorida"
+                                            step="0.00000001" min="0">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
                                         <label>Warna</label>
-                                        <input type="text" class="form-control" name="jmlh_warna">
+                                        <input type="number" class="form-control" name="jmlh_warna" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Jumlah Produksi</label>
-                                        <input type="text" class="form-control" name="jmlh_produksi">
+                                        <input type="number" class="form-control" name="jmlh_produksi"
+                                            step="0.00000001" min="0">
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Jumlah Hunian</label>
-                                        <input type="text" class="form-control" name="jmlh_hunian">
+                                        <input type="number" class="form-control" name="jmlh_hunian" step="0.00000001"
+                                            min="0">
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Jumlah Bed</label>
-                                        <input type="text" class="form-control" name="jmlh_bed">
+                                        <input type="number" class="form-control" name="jmlh_bed" step="0.00000001"
+                                            min="0">
                                     </div>
                                 </div>
 
@@ -225,3 +251,13 @@
         </section>
     </div>
 @endsection
+@push('script')
+    <script>
+        $('.float').keypress(function(event) {
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event
+                    .which > 57)) {
+                event.preventDefault();
+            }
+        });
+    </script>
+@endpush

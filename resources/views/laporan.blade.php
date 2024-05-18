@@ -38,7 +38,7 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $lap->kode }}</td>
-                                            <td>{{ $lap->perusahaan->nama_perusahaan }}</td>
+                                            <td>{{ $lap->perusahaan->nib->nama_perusahaan }}</td>
                                             <td>{{ $lap->jenis_sampling }}</td>
                                             <td>{{ $lap->tanggal_sampling }}</td>
                                             @if ($lap->status_id == 1)

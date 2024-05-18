@@ -25,9 +25,9 @@
                                         Perusahaan</label>
                                     <div class="col-sm-12 col-md-5">
                                         <input id="perusahaan" type="text" required="required" class="form-control boxed"
-                                            value="{{ $perusahaan[0]->nama_perusahaan }}" readonly>
+                                            value="{{ $perusahaan->nib->nama_perusahaan }}" readonly>
                                         <input id="perusahaan" name="perusahaan_id" type="hidden" required="required"
-                                            class="form-control boxed" value="{{ $perusahaan[0]->id }}" readonly>
+                                            class="form-control boxed" value="{{ $perusahaan->id }}" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-4">
@@ -103,150 +103,150 @@
                                     <div class="form-group col-md-2">
                                         <label>Debit Air Limbah (Inlet)</label>
                                         <input type="text" class="form-control" name="jmlh_inlet"
-                                            value={{ $laporan->jmlh_inlet }} required>
+                                            value={{ $laporan->jmlh_inlet }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Debit Air Limbah (Outlet)</label>
                                         <input type="text" class="form-control" name="jmlh_outlet"
-                                            value={{ $laporan->jmlh_outlet }} required>
+                                            value={{ $laporan->jmlh_outlet }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Debit Air Baku</label>
                                         <input type="text" class="form-control" name="jmlh_debit"
-                                            value={{ $laporan->jmlh_debit }} required>
+                                            value={{ $laporan->jmlh_debit }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>pH</label>
                                         <input type="text" class="form-control" name="jmlh_ph"
-                                            value={{ $laporan->jmlh_ph }} required>
+                                            value={{ $laporan->jmlh_ph }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Suhu</label>
                                         <input type="text" class="form-control" name="jmlh_suhu"
-                                            value={{ $laporan->jmlh_suhu }} required>
+                                            value={{ $laporan->jmlh_suhu }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>TSS</label>
                                         <input type="text" class="form-control" name="jmlh_tss"
-                                            value={{ $laporan->jmlh_tss }} required>
+                                            value={{ $laporan->jmlh_tss }}>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-2">
                                         <label>TDS</label>
                                         <input type="text" class="form-control" name="jmlh_tds"
-                                            value={{ $laporan->jmlh_tds }} required>
+                                            value={{ $laporan->jmlh_tds }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>COD</label>
                                         <input type="text" class="form-control" name="jmlh_cod"
-                                            value={{ $laporan->jmlh_cod }} required>
+                                            value={{ $laporan->jmlh_cod }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>BOD</label>
                                         <input type="text" class="form-control" name="jmlh_bod"
-                                            value={{ $laporan->jmlh_bod }} required>
+                                            value={{ $laporan->jmlh_bod }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Amoniak (NH₃₋N)</label>
                                         <input type="text" class="form-control" name="jmlh_amoniak"
-                                            value={{ $laporan->jmlh_amoniak }} required>
+                                            value={{ $laporan->jmlh_amoniak }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Minyak & Lemak</label>
                                         <input type="text" class="form-control" name="jmlh_minyak"
-                                            value={{ $laporan->jmlh_minyak }} required>
+                                            value={{ $laporan->jmlh_minyak }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Total Coliform</label>
                                         <input type="text" class="form-control" name="jmlh_caliform"
-                                            value={{ $laporan->jmlh_caliform }} required>
+                                            value={{ $laporan->jmlh_caliform }}>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-2">
                                         <label>Bakteri Coliform</label>
                                         <input type="text" class="form-control" name="jmlh_bakteri"
-                                            value={{ $laporan->jmlh_bakteri }} required>
+                                            value={{ $laporan->jmlh_bakteri }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>MBAS</label>
                                         <input type="text" class="form-control" name="jmlh_mbas"
-                                            value={{ $laporan->jmlh_mbas }} required>
+                                            value={{ $laporan->jmlh_mbas }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Sulfida ( S )</label>
                                         <input type="text" class="form-control" name="jmlh_sulfida"
-                                            value={{ $laporan->jmlh_sulfida }} required>
+                                            value={{ $laporan->jmlh_sulfida }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Nitrat (NO3-N)</label>
                                         <input type="text" class="form-control" name="jmlh_nitrat"
-                                            value={{ $laporan->jmlh_nitrat }} required>
+                                            value={{ $laporan->jmlh_nitrat }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Nitrit (NO2-N)</label>
                                         <input type="text" class="form-control" name="jmlh_nitrit"
-                                            value={{ $laporan->jmlh_nitrit }} required>
+                                            value={{ $laporan->jmlh_nitrit }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Phosphat (PO4-P)</label>
                                         <input type="text" class="form-control" name="jmlh_pshospat"
-                                            value={{ $laporan->jmlh_pshospat }} required>
+                                            value={{ $laporan->jmlh_pshospat }}>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-2">
                                         <label>Fenol Total</label>
                                         <input type="text" class="form-control" name="jmlh_fenol"
-                                            value={{ $laporan->jmlh_fenol }} required>
+                                            value={{ $laporan->jmlh_fenol }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Khrom Total (Cr)</label>
                                         <input type="text" class="form-control" name="jmlh_khorm"
-                                            value={{ $laporan->jmlh_khorm }} required>
+                                            value={{ $laporan->jmlh_khorm }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Seng (ZN)</label>
                                         <input type="text" class="form-control" name="jmlh_seng"
-                                            value={{ $laporan->jmlh_seng }} required>
+                                            value={{ $laporan->jmlh_seng }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Klorida</label>
                                         <input type="text" class="form-control" name="jmlh_klorida"
-                                            value={{ $laporan->jmlh_klorida }} required>
+                                            value={{ $laporan->jmlh_klorida }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Klor Bebas</label>
                                         <input type="text" class="form-control" name="jmlh_klor"
-                                            value={{ $laporan->jmlh_klor }} required>
+                                            value={{ $laporan->jmlh_klor }}>
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label>Fluorida (F)</label>
                                         <input type="text" class="form-control" name="jmlh_fluorida"
-                                            value={{ $laporan->jmlh_fluorida }} required>
+                                            value={{ $laporan->jmlh_fluorida }}>
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
                                         <label>Warna</label>
                                         <input type="text" class="form-control" name="jmlh_warna"
-                                            value={{ $laporan->jmlh_warna }} required>
+                                            value={{ $laporan->jmlh_warna }}>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Jumlah Produksi</label>
                                         <input type="text" class="form-control" name="jmlh_produksi"
-                                            value={{ $laporan->jmlh_produksi }} required>
+                                            value={{ $laporan->jmlh_produksi }}>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Jumlah Hunian</label>
                                         <input type="text" class="form-control" name="jmlh_hunian"
-                                            value={{ $laporan->jmlh_hunian }} required>
+                                            value={{ $laporan->jmlh_hunian }}>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label>Jumlah Bed</label>
                                         <input type="text" class="form-control" name="jmlh_bed"
-                                            value={{ $laporan->jmlh_bed }} required>
+                                            value={{ $laporan->jmlh_bed }}>
                                     </div>
                                 </div>
 

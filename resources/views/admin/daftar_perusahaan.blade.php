@@ -31,14 +31,13 @@
                                     </tbody>
                                     @foreach ($perusahaan as $key => $p)
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ $p->nama_perusahaan }}</td>
+                                        <td>{{ $p->nib->nama_perusahaan }}</td>
                                         <td>{{ $p->alamat_perusahaan }}</td>
                                         <td>{{ $p->kelurahan->nama_kelurahan }}</td>
                                         <td>{{ $p->telf_perusahaan }}</td>
                                         <td>
-                                            <a href="{{ url('/download', $p->filescan_perusahaan) }}"><button
-                                                    type="button" class="btn btn-primary btn-sm"><i
-                                                        class="fa fa-download"></i>Download
+                                            <a href="{{ url('/download', $p->filescan_perusahaan) }}"><button type="button"
+                                                    class="btn btn-primary btn-sm"><i class="fa fa-download"></i>Download
                                                 </button></a>
                                         </td>
                                         @if ($p->status_id == 1)
@@ -124,11 +123,11 @@
                                             <tbody>
                                                 <tr>
                                                     <th class="col-5" scope="col">No. Izin Kegiatan Usaha</th>
-                                                    <td>{{ $p->no_izin }}</td>
+                                                    <td>{{ $p->nib->no_izin }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th class="col-5" scope="col">Nama Perusahaan</th>
-                                                    <td>{{ $p->nama_perusahaan }}</td>
+                                                    <td>{{ $p->nib->nama_perusahaan }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th class="col-5" scope="col">Alamat Lengkap</th>
@@ -171,7 +170,7 @@
                                                     <td>{{ $p->tikor_ipal }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th class="col-5" scope="col">Titik Koordinat OUTFAL</th>
+                                                    <th class="col-5" scope="col">Titik Koordinat OUTFALL</th>
                                                     <td>{{ $p->tikor_oval }}</td>
                                                 </tr>
                                                 <tr>

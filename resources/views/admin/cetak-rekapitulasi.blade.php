@@ -4,7 +4,7 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Cetak Rekapitulasi</h1>
+                <h1>Laporan Bulanan</h1>
             </div>
             <div class="row">
                 <div class="col-12">
@@ -15,15 +15,17 @@
 
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-8">
                                     <div class="form-group">
                                         <label>Pilih Bulan</label>
-                                        <input type="month" class="form-control" id="bulan" name="bulan">
-                                    </div>
-                                </div>
-                                <div class="col-lg">
-                                    <div class="form-group">
-                                        <button class="btn btn-success" onclick="laporanView()">Tampilkan</button>
+                                        <div class="row">
+                                            <div class="col-6-xs p-2">
+                                                <input type="month" class="form-control" id="bulan" name="bulan">
+                                            </div>
+                                            <div class="col-6-xs p-2">
+                                                <button class="btn btn-success" onclick="laporanView()">Tampilkan</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -8,6 +8,7 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\LaboratoriumController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,7 +62,6 @@ Route::middleware('user')->group(function () {
 
     Route::get('/download/{file_lampiran}', [UserController::class, 'download']);
     Route::get('/riwayat', [UserController::class, 'riwayatlap']);
-
     Route::post('/lokasi-administrasi', [PerusahaanController::class, 'lokasiAdministrasi']);
 });
 
@@ -72,6 +72,8 @@ Route::middleware('admin')->group(function () {
     //DATA USER
     Route::post('/admin/tambah', [AdminController::class, 'storeAdmin']);
     Route::get('/admin/user', [AdminController::class, 'userList']);
+    Route::get('/admin/adminlist', [AdminController::class, 'adminList']);
+    Route::get('/admin/user/{id}/aktifasi', [AdminController::class, 'aktifasi']);
     Route::get('/admin/{userID}/user-delete', [AdminController::class, 'userDelete']);
 
     //DATA BIDANG
@@ -89,6 +91,7 @@ Route::middleware('admin')->group(function () {
 
     //DATA LABORATORIUM
     Route::get('/admin/perusahaan/laboratorium', [AdminController::class, 'laboratoriumList']);
+    Route::get('/admin/perusahaan/laboratorium/{id}/aktifasi', [AdminController::class, 'aktifasiPerusahaan']);
     Route::post('/admin/perusahaan/laboratorium', [AdminController::class, 'postLab']);
     Route::post('/admin/{labID}/lab-update', [AdminController::class, 'editLab']);
     Route::get('/admin/{labID}/lab-delete', [AdminController::class, 'deleteLab']);
@@ -101,17 +104,19 @@ Route::middleware('admin')->group(function () {
     Route::get('/status_disetuju/{id}', [AdminController::class, 'status_disetuju']);
     Route::get('/status_ditolak/{id}', [AdminController::class, 'status_ditolak']);
 
+    Route::get('/admin/kadar/{id}/tambah', [AdminController::class, 'addkadar']);
+    Route::post('/admin/kadar/{id}/tambah', [AdminController::class, 'addkadarStore']);
+
     //FEEDBACK
     Route::get('/admin/feedback/{id}/tambah', [AdminController::class, 'addFeedback']);
     Route::post('/admin/feedback/{id}/tambah', [AdminController::class, 'addFeedbackStore']);
     Route::get('/admin/feedback/{id}/delete', [AdminController::class, 'deleteFeedback']);
 
     //EXPORT FILE EXCEL
-    Route::get('/cetak/laporan/{date1}/{date2}', [ExportController::class, 'laporanView']);
+    Route::get('/cetak/laporan/{date1}/{date2}/{bidang}/{lokasi}', [ExportController::class, 'laporanView']);
     Route::get('/cetak/laporan/{date1}/{date2}/export', [ExportController::class, 'laporanExport']);
     Route::get('/cetak/laporan', [ExportController::class, 'cetakLaporan']);
     Route::get('/export', [ExportController::class, 'export']);
-
     Route::get('/rekapitulasi', [AdminController::class, 'seleksirekap']);
     Route::get('/rekapitulasi/{tahun}-{bulan}', [AdminController::class, 'rekapitulasi']);
 });

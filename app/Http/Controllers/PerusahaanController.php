@@ -10,6 +10,7 @@ use App\Models\Perusahaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\NIB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
@@ -86,10 +87,12 @@ class PerusahaanController extends Controller
         $kecamatan = Kecamatan::pluck('nama_kecamatan', 'id');
         $kelurahan = Kelurahan::pluck('nama_kelurahan', 'id');
         $bidang = Bidang::pluck('nama_bidang', 'id');
+        $nib = NIB::where('user_id', auth()->user()->id)->first();
         return view('registrasi-perusahaan', [
             'bidang' => $bidang,
             'kecamatan' => $kecamatan,
             'kelurahan' => $kelurahan,
+            'nib' => $nib,
         ]);
     }
     public function postPerusahaan()
@@ -117,8 +120,7 @@ class PerusahaanController extends Controller
             'user_id' => $user->id,
             'pimpinan_id' => $pimpinan->id,
             'status_id' => request('status_id'),
-            'no_izin' => request('no_izin'),
-            'nama_perusahaan' => request('nama_perusahaan'),
+            'nib_id' => auth()->user()->nib->id,
             'alamat_perusahaan' => request('alamat_perusahaan'),
             'kelurahan_id' => request('kelurahan_id'),
             'kecamatan_id' => request('kecamatan_id'),
@@ -162,7 +164,6 @@ class PerusahaanController extends Controller
         }
 
         $pimpinan = Pimpinan::where('user_id', auth()->user()->id)->first();
-
         $pimpinan->update([
             'nama_pimpinan' => request('nama_pimpinan'),
             'alamat_pimpinan' => request('alamat_pimpinan'),
@@ -194,7 +195,6 @@ class PerusahaanController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withInput()->withErrors($validator);
         }
-
         if (request()->hasFile('filescan_perusahaan')) {
             $filescan = time() . "_" . request()->filescan_perusahaan->getClientOriginalName();
             request()->filescan_perusahaan->move(public_path('fileperusahaan/'), $filescan);
@@ -207,7 +207,6 @@ class PerusahaanController extends Controller
             $file = public_path('fotoperusahaan/' . $perusahaan->foto_perusahaan);
             File::delete($file);
         }
-
         $perusahaan->update([
             'no_izin' => request('no_izin'),
             'nama_perusahaan' => request('nama_perusahaan'),

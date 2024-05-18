@@ -84,7 +84,7 @@
     <script type="text/javascript">
         var locations = [
             @foreach ($perusahaan as $per)
-                ['{{ $per->nama_perusahaan }}', {{ $per->tikor_perusahaan }}],
+                ['{{ $per->nib->nama_perusahaan }}', {{ $per->tikor_perusahaan }}],
             @endforeach
 
         ];

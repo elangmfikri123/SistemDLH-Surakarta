@@ -17,9 +17,13 @@ class Perusahaan extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function nib()
+    {
+        return $this->belongsTo(NIB::class, 'nib_id');
+    }
     public function laporan()
     {
-        return $this->hasMany(Laporan::class . 'perusahaan_id', 'id');
+        return $this->hasMany(Laporan::class, 'perusahaan_id', 'id');
     }
     public function bidang()
     {

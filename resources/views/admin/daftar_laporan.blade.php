@@ -22,7 +22,7 @@
                                             <th class="text-center sorting_asc">No</th>
                                             <th>No. Laporan</th>
                                             <th>Perusahaan</th>
-                                            <th>Jenis Sampling</th>
+                                            <th>Lokasi Sampling</th>
                                             <th>Tanggal Sampling</th>
                                             <th>Berkas</th>
                                             <th>Status</th>
@@ -34,7 +34,7 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $lap->kode }}</td>
-                                            <td>{{ $lap->perusahaan->nama_perusahaan }}</td>
+                                            <td>{{ $lap->perusahaan->nib->nama_perusahaan }}</td>
                                             <td>{{ $lap->jenis_sampling }}</td>
                                             <td>{{ $lap->tanggal_sampling }}</td>
                                             <td>
